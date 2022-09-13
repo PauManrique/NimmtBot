@@ -32,14 +32,14 @@ class NimmtBot:
 
   def choose_card_from_hand(self, safe_lines, full_lines_last_cards, hand_cards):
     card_to_play = None
-    min_card_value_diff = 200    
+    min_risk = 1000    
 
     for line in safe_lines:
       line_last_card = line[len(line) - 1]
       for card in hand_cards:
-        diff = card - line_last_card
-        if card > line_last_card and diff < min_card_value_diff and not self.is_card_going_to_full_line(card, line_last_card, full_lines_last_cards):
-          min_card_value_diff = diff
+        risk = self.calculate_risk(card, line)
+        if card > line_last_card and risk < min_risk and not self.is_card_going_to_full_line(card, line_last_card, full_lines_last_cards):
+          min_risk = risk
           card_to_play = card
 
     return card_to_play
@@ -49,4 +49,10 @@ class NimmtBot:
       if full_line_last_card > line_last_card and card > full_line_last_card:
         return True
 
-    return False    
+    return False
+
+  def calculate_risk(self, card, line):
+    card_space_risk = (card - line[len(line) - 1]) ** 1.2
+    line_length_risk = len(line) ** 2
+    print("card = " + str(card) + " last in line = " + str(line[len(line) - 1]) + " line length = " + str(len(line)) + " risk = " + str(card_space_risk + line_length_risk))
+    return card_space_risk + line_length_risk
