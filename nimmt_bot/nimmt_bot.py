@@ -14,6 +14,17 @@ class NimmtBot:
       return "RANDOM"      
     return "PLAY " + str(card_to_play)
 
+  def calculate_line(self, line_1, line_2, line_3, line_4):
+    line_to_play = None
+    min_line_points = 100
+    for idx, line in enumerate([line_1, line_2, line_3, line_4]):
+      line_points = self.calculate_line_points(line)
+      if line_points < min_line_points:
+        line_to_play = idx
+        min_line_points = line_points
+    
+    return "PICK " + str(line_to_play)  
+
   def get_safe_lines(self, line_1, line_2, line_3, line_4):
     safe_lines = []
     for line in line_1, line_2, line_3, line_4:

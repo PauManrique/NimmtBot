@@ -35,7 +35,15 @@ def test_should_take_into_account_line_points_for_risk():
     line_4 = [80, 83, 85]
     hand_card = [5, 24, 36, 90, 57]
     bot = NimmtBot()
-    assert "PLAY 90" == bot.calculate_move(line_1, line_2, line_3, line_4, hand_card)    
+    assert "PLAY 90" == bot.calculate_move(line_1, line_2, line_3, line_4, hand_card)
+
+def test_should_choose_least_points_when_selecting_line():
+    line_1 = [31, 32, 33, 34, 35]
+    line_2 = [46, 47, 48, 49, 50]
+    line_3 = [53]
+    line_4 = [80, 83, 85]
+    bot = NimmtBot()
+    assert "PICK 2" == bot.calculate_line(line_1, line_2, line_3, line_4)        
 
 def test_should_fallback_to_random():
     line_1 = [1, 2, 3, 4, 5]
