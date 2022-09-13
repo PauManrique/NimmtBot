@@ -28,6 +28,15 @@ def test_should_choose_a_less_risky_line_when_possible():
     bot = NimmtBot()
     assert "PLAY 24" == bot.calculate_move(line_1, line_2, line_3, line_4, hand_card)
 
+def test_should_take_into_account_line_points_for_risk():
+    line_1 = [1, 2, 3, 4, 5]
+    line_2 = [6, 7, 8, 9, 10]
+    line_3 = [50, 53, 55]
+    line_4 = [80, 83, 85]
+    hand_card = [5, 24, 36, 90, 57]
+    bot = NimmtBot()
+    assert "PLAY 90" == bot.calculate_move(line_1, line_2, line_3, line_4, hand_card)    
+
 def test_should_fallback_to_random():
     line_1 = [1, 2, 3, 4, 5]
     line_2 = [6, 7, 8, 9, 10]

@@ -54,5 +54,25 @@ class NimmtBot:
   def calculate_risk(self, card, line):
     card_space_risk = (card - line[len(line) - 1]) ** 1.2
     line_length_risk = len(line) ** 2
-    print("card = " + str(card) + " last in line = " + str(line[len(line) - 1]) + " line length = " + str(len(line)) + " risk = " + str(card_space_risk + line_length_risk))
-    return card_space_risk + line_length_risk
+    line_points_risk = (self.calculate_line_points(line) + self.calculate_card_points(card)) ** 1.3
+    print("card = " + str(card) + " last in line = " + str(line[len(line) - 1]) + " line length = " + str(len(line)) + " risk = " + str(card_space_risk + line_length_risk + line_points_risk))
+    print("line points risk = " + str(line_points_risk) + " card_space_risk = " + str(card_space_risk) + " line_length_risk = " + str(line_length_risk))
+    return card_space_risk + line_length_risk + line_points_risk
+
+  def calculate_line_points(self, line):
+    points = 0
+    for card in line:
+      points += self.calculate_card_points(card)
+    return points
+
+  def calculate_card_points(self, card):
+    if card == 55:
+      return 7
+    elif card % 11 == 0:
+      return 5
+    elif card % 10 == 0:
+      return 3      
+    elif card % 5 == 0:
+      return 2
+    else:
+      return 1        
